@@ -89,6 +89,36 @@ class Validador():
                 errores['Email']='El Email ya esta registrado'
                 return errores
         return errores
+    
+    def validarUsuarioUP(self,dic):#valida el update de usuario
+        carga={}
+        errores={}
+        carcteresEspeciales=['$','@','#','%']
+        
+        for clave, valor in dic.items():
+            carga[clave]=valor.strip()#uso strip para sacar espacios de los costados
+        if carga["Nombre"]=="":
+            errores["Nombre"]="Campo Nombre Vacio"
+        if carga["Email"]=="":
+            errores["Email"]="Campo Email Vacio"
+        elif validate_email(carga["Email"])==False:
+            errores["Email"]="No tiene el formato de email"
+        #VALIDACION CONTRASEÑA - MAY/MIN/CARACT-ESPEC/NUM    
+        if len(carga["Contraseña"])<6:
+           errores['Contraseña']="la Contraseña debe contener mas de 6 caracteres"
+        elif carga['Contraseña']=='':
+            errores['Contraseña']='campo Contraseña vacio'
+        elif not any(i.isupper() for i in carga["Contraseña"]):
+            errores["Contraseña"]="Contraseña debe contener una letra mayuscula"
+        elif not any(i.isdigit() for i in carga["Contraseña"]):
+            errores["Contraseña"]="Contraseña debe contener un caracter numeral"
+        elif not any(i.islower() for i in carga["Contraseña"]):
+            errores["Contraseña"]="Contraseña debe contener una letra minuscula"
+        elif not any(i in carcteresEspeciales for i in carga["Contraseña"]):
+            errores["Contraseña"]="Contraseña debe contener carateres especiales $@#"
+            
+        
+        return errores
         
     def validar_login(self,dic):
         sql="select * from usuarios where Email=%s"

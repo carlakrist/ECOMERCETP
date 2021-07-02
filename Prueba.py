@@ -9,6 +9,7 @@ from BaseDatos import dbE
 from VALIDADOR import VAL
 from PRODUCTOS import producto
 
+
 usuario1=usuario("36521788","Carol","Torres","caroltt@gmail.com",1163248975, "cramer 391","Rosario","123#carolT")
 
 usuario2=usuario(29854693, "Diego", "Garcia", "dvgarcia@gmail.com", 1185479652, "Conesa 2171", "Rosario", "567#garcia")
@@ -22,7 +23,7 @@ usuario2=usuario(29854693, "Diego", "Garcia", "dvgarcia@gmail.com", 1185479652, 
 
 
 
-def regitro_usuario():
+def update_usuario():#Diccionario con los datos - lo Valida y RETORNA el Diccionario
     FormularioUSER={}
     FormularioUSER['DNI']=input("DNI: ")
     FormularioUSER['Nombre']=input("Nombre: ")
@@ -54,11 +55,11 @@ def regitro_usuario():
         else:
             print("Error en seleccion")
             c = 1
-    FormularioUSER['Contraseña']=input("Contraseña: ")
-    errores=VAL.validarUsuario(FormularioUSER)
+    FormularioUSER['Contraseña']=input("Contraseña: NUM, MAYUC, CarctEspeciales=[$,@,#,%]\n")
+    errores=VAL.validarUsuarioUP(FormularioUSER)
     if not errores:
             user=usuario(**FormularioUSER)
-            user.saveBD()
+            user.updateBD()
             return user
             print("Usuario Creado con Exito!")
     [print(i) for i in errores.values()]
@@ -87,8 +88,12 @@ def login():
     return errores    
 
 
-usuario3=usuario(3652301, "Gonzalo Jose", "Mamani", "gmm23@gmail.com", 3515231202, "Calle Bella Vista 625 depto 12 C", "Cordoba", "gjmmCORDOBA#789")
+usuario3=usuario(3652301, "Gonzalo Jose", "Mamani", "gmm23@gmail.com", 3515231202, "Calle Bella Vista 625 depto 12 C", "Cordoba", "gjmmC#789")
 
-usuario3.updateBD(regitro_usuario())
+    
+    
+    
+    
+usuario1 = update_usuario()
 
 

@@ -90,26 +90,20 @@ class usuario():
     
     def saveBD(self):
         self.set_ID_ciudad()
-        sql="insert into usuarios(DNI, Nombre, Apellido, Email, Celular, Direccion, id_ciudad, Contraseña) values(%s,%s,%s,%s,%s,%s,%s,%s)"
+        sql="insert into usuarios(DNI, Nombre, Apellido, Email, Celular, direccion, id_ciudad, Contraseña) values(%s,%s,%s,%s,%s,%s,%s,%s)"
         valor =(self.get_DNI(), self.get_Nombre(), self.get_Apellido(), self.get_Email(), self.get_Celular(),self.get_Direccion(),self.get_ID_ciudad(),self.Encriptar_Contraseña())
         dbE.get_cursor().execute(sql,valor)
         dbE.get_conexion().commit()
         self.set_ID(dbE.get_cursor().lastrowid)#Toma el ID de la Ultima linea donde esta el nuevo registro
         
-    def updateBD(self, dic):
+    def updateBD(self):
         self.set_ID_ciudad()
-        sql = "update usuarios set Nombre=%s, Apellido=%s, Email=%s, Celular=%s Direccion=%s Ciudad=%s Contraseña=%s  where id=%s"
-        valor = (dic['DNI'],dic['Nombre'],dic['Apellido'], dic['Email'], dic['Celular'], dic['Direccion'],dic['Ciudad'], dic['Contraseña'],self.get_ID())
+        sql = "update usuarios set DNI=%s, Nombre=%s, Apellido=%s, Email=%s, Celular=%s, direccion=%s, id_ciudad=%s, Contraseña=%s  where id=%s"
+        valor = (self.get_DNI(),self.get_Nombre(), self.get_Apellido(), self.get_Email(), self.get_Celular(),self.get_Direccion(),self.get_ID_ciudad(),self.Encriptar_Contraseña(),self.get_ID())
         dbE.get_cursor().execute(sql,valor)
         dbE.get_conexion().commit()
-        self.set_DNI(dic['DNI'])
-        self.set_Nombre(dic['Nombre'])
-        self.set_Apellido(dic['Apellido'])
-        self.set_Email(dic['Email'])
-        self.set_Celular(dic['Celular'])
-        self.set_Direccion(dic['Direccion'])
-        self.set_Ciudad(dic['Ciudad'])
-        self.set_Contraseña(dic['Contraseña'])
+        
+
     
     def deleteBD(self):
         sql = "delete from usuarios where id=%s"
@@ -132,7 +126,7 @@ class usuario():
         result = dbE.get_cursor().fetchone()
         for i in result:
             print(i)
-    
+            
     
 
     
