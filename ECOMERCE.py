@@ -13,7 +13,6 @@ from MARCA import marca
 from POTENCIA import potencia
 from COMPRAS import compras
 from datetime import datetime
-import random
 
 class ecomerce:
     
@@ -165,74 +164,78 @@ def H_Compra(ID_Usuario):
 
 print(f"--------------------MENU PRINCIPAL------------------------\n\t\t\t{E.NombreE}")
 MENU_INICIO=True
+MENU_USER = ""
 while MENU_INICIO==True:
+    MENU_INICIO=True
     try:
         opcion = int(input("\tBienvenido a Nuestra pagina de Compras\n\nOPCIONES: 1. Registro Usuario \t 2. Iniciar sesión\n ----> "))
         if opcion == 1:
             user1 = regitro_usuario()
             print(f" Hola! {user1.get_Nombre()} {user1.get_Apellido()}")
-            MENU_USER = str(user1.get_ID())
             MENU_INICIO=False
+            MENU_USER = True
         elif opcion ==2:
             user1 = login()
             print(f"\n\n Hola! {user1.get_Nombre()} {user1.get_Apellido()}\n")
             MENU_INICIO=False
-            MENU_USER = str(user1.get_ID())
+            MENU_USER = True
         else:
             MENU_INICIO=True
     except (ValueError, TypeError, SyntaxError,AttributeError,NameError):
         print("\n\tError en Tipo o Valor ingresado")
-        MENU_INICIO=True
-    
-  
-while MENU_USER.isdigit() == True:
-           
+        MENU_USER = False
+
+    while MENU_USER == True:
         try:
             selec=int(input("\tMenu Usuario \n(1)Historial de Compras\n(2)Nueva Compra\n(3)Salir de la Cuenta \n(Coloque el Numero de su Seleccion)-----> "))
-            if selec == 1:
+            while selec == 1:
                 H  = H_Compra(user1.get_ID())
                 if H == None:
-                   print(f" \n--- El Usuario No Tiene Compras Registradas ---\n ")
-                   print(f"\n------------------- --- --- -------------------------\n")
+                    print(f" \n--- El Usuario No Tiene Compras Registradas ---\n ")
+                    print(f"\n------------------- --- --- -------------------------\n")
+                    selec=int(input("\tMenu Usuario \n(1)Historial de Compras\n(2)Nueva Compra\n(3)Salir de la Cuenta \n(Coloque el Numero de su Seleccion)-----> "))
                 else:
                     H.vista_compra()
                     print(f"\n------------------- --- --- -------------------------\n")
-            elif selec == 2:
+                    selec=int(input("\tMenu Usuario \n(1)Historial de Compras\n(2)Nueva Compra\n(3)Salir de la Cuenta \n(Coloque el Numero de su Seleccion)-----> "))
+            while selec == 2:
                     print(f"\n------------------- --- --- -------------------------\n")
                     subselec= int(input("\t PRODUCTOS:\n(1) VER TODOS\n(2) VER POR TIPOS \n(3)Volver\n(Coloque el Numero de su Seleccion)-----> "))
                     if subselec == 1:
-                        vista_Productos()
-                        IDp= int(input("Selecciona el ID del Producto a comprar.. ID: "))
-                        p =  producto(IDp)
-                        p.Import_Producto()
-                        print(f"\n{user1.get_Nombre()}, Seleccionaste {p.get_Nombre()} por ${p.get_Precio()}\n")
-                        pago = MP()
-                        print(f"Compra Realizada Con Exito! Abonaste ${p.get_Precio()} con {pago}")
-                        print(f"\n------------------- --- --- -------------------------\n")
-                        #compra = compras(user1.get_ID(), p.get_id_Producto(), pago, datetime.now())
-                        #compra.set_MetodoPago()
-                        #compra.save_Compra_BD()
+                            vista_Productos()
+                            IDp= int(input("Selecciona el ID del Producto a comprar.. ID: "))
+                            p =  producto(IDp)
+                            p.Import_Producto()
+                            print(f"\n{user1.get_Nombre()}, Seleccionaste {p.get_Nombre()} por ${p.get_Precio()}\n")
+                            pago = MP()
+                            print(f"Compra Realizada Con Exito! Abonaste ${p.get_Precio()} con {pago}")
+                            print(f"\n------------------- --- --- -------------------------\n")
+                            #compra = compras(user1.get_ID(), p.get_id_Producto(), pago, datetime.now())
+                            #compra.set_MetodoPago()
+                            #compra.save_Compra_BD()
+                            selec=int(input("\tMenu Usuario \n(1)Historial de Compras\n(2)Nueva Compra\n(3)Salir de la Cuenta \n(Coloque el Numero de su Seleccion)-----> "))
                     elif subselec == 2:
-                        Vista_Categorias()
-                        IDp = int(input("Selecciona el ID del Producto a comprar.. ID: "))
-                        p =  producto(IDp)
-                        p.Import_Producto()
-                        print(f"\n{user1.get_Nombre()}, Seleccionaste {p.get_Nombre()} por ${p.get_Precio()}\n")
-                        pago = MP()
-                        print(f"Compra Realizada Con Exito! Abonaste ${p.get_Precio()} con {pago}")
-                        print(f"\n------------------- --- --- -------------------------\n")
-                        #compra = compras(user1.get_ID(), p.get_id_Producto(), pago, datetime.now())
-                        #compra.set_MetodoPago()
-                        #compra.save_Compra_BD()
-                    elif subselec == 3:
-                        break
-                    break
-            elif selec == 3:
-                break
-            break
-        except (ValueError, TypeError, SyntaxError,AttributeError):
+                            Vista_Categorias()
+                            IDp = int(input("Selecciona el ID del Producto a comprar.. ID: "))
+                            p =  producto(IDp)
+                            p.Import_Producto()
+                            print(f"\n{user1.get_Nombre()}, Seleccionaste {p.get_Nombre()} por ${p.get_Precio()}\n")
+                            pago = MP()
+                            print(f"Compra Realizada Con Exito! Abonaste ${p.get_Precio()} con {pago}")
+                            print(f"\n------------------- --- --- -------------------------\n")
+                            #compra = compras(user1.get_ID(), p.get_id_Producto(), pago, datetime.now())
+                            #compra.set_MetodoPago()
+                            #compra.save_Compra_BD()
+                            selec=int(input("\tMenu Usuario \n(1)Historial de Compras\n(2)Nueva Compra\n(3)Salir de la Cuenta \n(Coloque el Numero de su Seleccion)-----> "))
+                    if subselec == 3:
+                        selec=int(input("\tMenu Usuario \n(1)Historial de Compras\n(2)Nueva Compra\n(3)Salir de la Cuenta \n(Coloque el Numero de su Seleccion)-----> "))
+            if selec == 3:
+                MENU_USER = False
+                MENU_INICIO=True
+            
+        except (ValueError, TypeError, SyntaxError,AttributeError,NameError):
             print("\n\tError en Tipo o Valor ingresado")
-    MENU_INICIO=True
+            MENU_USER = True
             
 
 
